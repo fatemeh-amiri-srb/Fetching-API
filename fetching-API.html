@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $.ajax({
+          url: "https://reqres.in/api/users",
+          type: "GET",
+          success: function (result) {
+            displayData(result.data);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+
+        function displayData(data) {
+          const apiDataDiv = $("#users");
+          apiDataDiv.empty();
+
+          const table = $("<table>").attr("border", "1");
+
+          const headerRow = $("<tr>");
+          headerRow.append(
+            "<th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th>"
+          );
+          table.append(headerRow);
+
+          data.forEach((item) => {
+            const row = $("<tr>");
+            row.append(`<td>${item.id}</td>`);
+            row.append(`<td>${item.first_name}</td>`);
+            row.append(`<td>${item.last_name}</td>`);
+            row.append(`<td>${item.email}</td>`);
+            table.append(row);
+          });
+
+          apiDataDiv.append(table);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="users"></div>
+  </body>
+</html>
